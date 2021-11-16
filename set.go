@@ -82,3 +82,24 @@ func (setArr *Set) Delete(numbers ...int) {
 		*setArr = append(*setArr, key)
 	}
 }
+
+func (setArr *Set) Add(addArr Set) {
+	*setArr = append(*setArr, addArr...)
+	setArr.Convert()
+}
+
+func (setArr *Set) Subtract(subArr Set) {
+	setMap := map[int]bool{}
+	for _, value := range *setArr {
+		setMap[value] = true
+	}
+	*setArr = Set{}
+	for _, value := range subArr {
+		if setMap[value] {
+			delete(setMap, value)	
+		}
+	}
+	for key, _ := range setMap {
+		*setArr = append(*setArr, key)
+	}
+}
